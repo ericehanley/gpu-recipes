@@ -18,6 +18,7 @@ FROM docker.io/vllm/vllm-openai:${VLLM_VERSION}
 
 WORKDIR /vllm-workspace
 COPY ray_init.sh /vllm-workspace/ray_init.sh
+RUN chmod +x /vllm-workspace/ray_init.sh
 
 COPY requirements.txt /vllm-workspace/requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt

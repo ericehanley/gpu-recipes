@@ -49,7 +49,15 @@ network:
   ncclSettings:
   - name: NCCL_DEBUG
     value: "VERSION"
-  subnetworks[]:
+  subnetworks:
+  - vpc1
+  - vpc2
+  - vpc3
+  - vpc4
+  - vpc5
+  - vpc6
+  - vpc7
+  - vpc8
 
 vllm:
   replicaCount: 1

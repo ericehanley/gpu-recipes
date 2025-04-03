@@ -37,6 +37,12 @@ Before running this recipe, ensure your environment is configured as follows:
 To prepare the required environment, see
 [GKE environment setup guide](../../../../docs/configuring-environment-gke-a3-mega.md).
 
+**NOTE:** There are a few additional preparations to make with the environment described in the above document:
+
+  1. Specify the instance type when spinning up gke cluster as default instance type (e2-medium) does not have required vCPU for LWS.
+  2. Enable Workforce Identity and GCSFuse for cluster.
+  3. Create and attach service account for access to bucket.
+
 ## Run the recipe
 
 It is recommended to use Cloud Shell as your client to complete the steps.

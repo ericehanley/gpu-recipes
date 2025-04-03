@@ -52,15 +52,18 @@ spec:
           networking.gke.io/interfaces: |
           {{- if $root.Values.network.subnetworks }}
             [
-              {{- range $i, $subnetwork := $root.Values.network.subnetworks }}
-              {"interfaceName":"eth{{ $i }}","network":"{{ $subnetwork }}"}{{ eq $i 8 | ternary "" ","}}
+              {"interfaceName":"eth0","network":"default"} # Always include default network first
+              {{- range $index, $networkName := $root.Values.network.subnetworks }}
+              , # Add comma BEFORE each subsequent item
+              {{- $intfIndex := add1 $index }} #Interface index starts from 1 (0+1)
+              {"interfaceName":"eth{{ $intfIndex }}","network":"{{ $networkName }}"}
               {{- end }}
             ]
           {{- else }}
             [
               {"interfaceName":"eth0","network":"default"},
-              {{- range  $i := until 8 }}
-              {"interfaceName":"eth{{ add 1 $i }}","network":"{{ $root.Values.clusterName }}-gpunet-{{ $i }}-subnet"}{{ eq $i 7 | ternary "" ","}}
+              {{- range $i := until 8 }}
+              {"interfaceName":"eth{{ add 1 $i }}","network":"{{ $root.Values.clusterName }}-gpunet-{{ $i }}-subnet"}{{ if lt $i 7 }},{{ end }} # Add comma if not last item (index < 7)
               {{- end }}
             ]
           {{- end}}
